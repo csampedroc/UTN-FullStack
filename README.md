@@ -1,2 +1,2 @@
 # web-development
-Learning path of web development
+My Learning path to web development
