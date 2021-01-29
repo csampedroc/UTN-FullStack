@@ -85,12 +85,6 @@ var productos =  [
         nombre: "shampoo",
         precio: 400
     },
-
-    {
-        nombre: "harina",
-        precio: 35
-    },
-
     {
         nombre: "salsa de tomate",
         precio: 35
@@ -98,31 +92,45 @@ var productos =  [
 
 ];
 
+let carrito = [];
+
 let tabla = document.getElementById("articulos");
 
-for(let i = 0; i < productos.length ; i++) {
+function cargarProductos() {
 
-    let fila = document.createElement("tr");
+    for(let i = 0; i < productos.length ; i++) {
 
-    let columnaNombre = document.createElement("td");
-    let valorNombre = document.createTextNode(productos[i].nombre);
+        let fila = document.createElement("tr");
     
-    columnaNombre.appendChild(valorNombre);
+        let columnaNombre = document.createElement("td");
+        let valorNombre = document.createTextNode(productos[i].nombre);
+        
+        columnaNombre.appendChild(valorNombre);
+        
+        let columnaPrecio = document.createElement("td");
+        let valorPrecio = document.createTextNode(productos[i].precio);
+        
+        columnaPrecio.appendChild(valorPrecio);
+        
+        fila.appendChild(columnaNombre);
+        fila.appendChild(columnaPrecio);
+        fila.setAttribute('indice', i);
     
-    let columnaPrecio = document.createElement("td");
-    let valorPrecio = document.createTextNode(productos[i].precio);
+        fila.onclick=agregarProducto;    
+            
+        tabla.appendChild(fila);
     
-    columnaPrecio.appendChild(valorPrecio);
-    
-    fila.appendChild(columnaNombre);
-    fila.appendChild(columnaPrecio)
-
-    fila.onclick=agregarProducto;
-    
-    tabla.appendChild(fila);
-
+    }
 }
-    
-function agregarProducto {
-    console.log("Pulso clic ");
+
+function agregarProducto() {
+    carrito.push(this.getAttribute('indice'));
+    carrito.forEach(element => {
+        console.log(element);
+        console.log(productos[element].nombre);
+        console.log(productos[element].precio);
+    });
 }
+
+
+cargarProductos();
