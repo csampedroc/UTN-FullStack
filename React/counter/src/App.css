@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+}
+
+h3 {
+  font-weight: 100;
+  font-size: 10rem;
+}
+
+
+button {
+  margin: 5px;
+  padding: 15px 32px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;  
+  border-radius: 12px;
+  font-size: 50px;  
+}
+
+.increment {
+  background-color: #4CAF50;
+} 
+
+.decrement {
+  background-color: #f44336;
+} 
+
+
+.reset {
+ 
+  background-color: #e7e7e7;
+  color: black;
+} 
