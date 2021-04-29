@@ -9,13 +9,13 @@ function App() {
 
   return (
     <Router>
-      <nav className="navbar is-dark is-spaced">
-        <div className="navbar-menu">
-          <div className="navbar-start">
-            <Link className="navbar-item" to="/">Inicio</Link>
-            <Link className="navbar-item" to="/libros">Libros</Link>
-            <Link className="navbar-item" to="/personas">Personas</Link>
-            <Link className="navbar-item" to="/generos">Generos</Link>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="collapse navbar-collapse">
+          <div className="navbar-nav">        
+            <Link className="nav-item nav-link" to="/">Inicio</Link>
+            <Link className="nav-item nav-link" to="/libros">Libros</Link>
+            <Link className="nav-item nav-link" to="/personas">Personas</Link>
+            <Link className="nav-item nav-link" to="/generos">Generos</Link>
           </div>        
         </div>        
       </nav>
