@@ -4,6 +4,7 @@ import ListadoGeneros from './components/Generos/ListadoGeneros';
 import Inicio from './components/Inicio';
 import EditarLibros from './components/Libros/EditarLibros';
 import ListadoLibros from './components/Libros/ListadoLibros';
+import PrestarLibros from './components/Libros/PrestarLibros';
 import ListadoPersonas from './components/Personas/ListadoPersonas';
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
         </Route>          
         <Route exact path="/libros/editar/:id">
           <EditarLibros />
+        </Route>
+        <Route exact path="/libros/prestar/:id">
+          <PrestarLibros />
         </Route>
         <Route exact path="/personas">
           <ListadoPersonas />

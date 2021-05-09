@@ -9,7 +9,6 @@ export default function ListadoLibros() {
     const [error, setError] = useState('');
     const [mensaje, setMensaje] = useState('');
     const [show, setShow] = useState(false);        
-    const [listaPersona, setListaPersona] = useState([]);            
 
     const endpoint = 'http://localhost:3333/libro'
 
@@ -22,7 +21,7 @@ export default function ListadoLibros() {
             if (response.status === 200) {
 
                 const listadoCompleto = response.data.map(libro => {
-                    const personaLibro = listadoPersonas.find(persona => persona.id == libro.persona_id);
+                    const personaLibro = listadoPersonas.find(persona => persona.id === libro.persona_id);
                     const listado = JSON.parse(JSON.stringify(libro));
                     listado.persona = personaLibro
                         ? personaLibro.alias
@@ -83,7 +82,7 @@ export default function ListadoLibros() {
                     <Link to={ `/libros/editar/${ books.id }` }><Button variant="primary" size="sm">Editar</Button></Link>
                     <Link onClick={() => eliminarLibro(books.id) }><Button variant="danger" size="sm">Eliminar</Button></Link>
                     { books.persona_id === null 
-                        ? <Link to={ `/libros/prestar/${ books.id }` }><Button variant="info" size="sm">Prestar</Button></Link>
+                        ? <Link to={{ pathname: `/libros/prestar/${ books.id }`, data: books.id  }}><Button variant="info" size="sm">Prestar</Button></Link>
                         : <Link onClick={() => devolverLibro(books.id) }><Button variant="success" size="sm">Devolver</Button></Link>
                     }   
                 </div>              
