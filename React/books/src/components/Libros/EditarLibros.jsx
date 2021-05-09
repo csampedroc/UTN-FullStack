@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Users() {
+export default function EditarLibros() {
     return (
         <div>
-            Personas
+            Editar
         </div>
     )
 }

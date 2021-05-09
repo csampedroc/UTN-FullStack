@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Generos() {
+export default function ListadoGeneros() {
     return (
         <div>
             Generos

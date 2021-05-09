@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
-import Generos from './components/Generos';
+import ListadoGeneros from './components/Generos/ListadoGeneros';
 import Inicio from './components/Inicio';
-import Libros from './components/Libros';
-import Personas from './components/Personas';
+import EditarLibros from './components/Libros/EditarLibros';
+import ListadoLibros from './components/Libros/ListadoLibros';
+import ListadoPersonas from './components/Personas/ListadoPersonas';
 
 function App() {
 
   return (
+
     <Router>
+
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div className="collapse navbar-collapse">
           <div className="navbar-nav">        
@@ -18,19 +21,22 @@ function App() {
             <Link className="nav-item nav-link" to="/generos">Generos</Link>
           </div>        
         </div>        
-      </nav>
+      </nav>  
 
       <Switch>
-        <Route path="/libros">
-          <Libros />
+        <Route exact path="/libros">
+          <ListadoLibros />
+        </Route>          
+        <Route exact path="/libros/editar/:id">
+          <EditarLibros />
         </Route>
-        <Route path="/personas">
-          <Personas />
+        <Route exact path="/personas">
+          <ListadoPersonas />
         </Route>
-        <Route path="/generos">
-          <Generos />
+        <Route exact path="/generos">
+          <ListadoGeneros />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Inicio />
         </Route>
       </Switch>
