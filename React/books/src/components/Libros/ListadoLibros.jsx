@@ -9,15 +9,28 @@ export default function ListadoLibros() {
     const [error, setError] = useState('');
     const [mensaje, setMensaje] = useState('');
     const [show, setShow] = useState(false);        
+    const [listaPersona, setListaPersona] = useState([]);            
 
     const endpoint = 'http://localhost:3333/libro'
 
     const fetchBooks = async () => {
 
         try {                
+            const responsePersonas = await axios.get('http://localhost:3333/persona/');
+            const listadoPersonas = responsePersonas.data; 
             const response = await axios.get(endpoint);   
             if (response.status === 200) {
-                setList(response.data);
+
+                const listadoCompleto = response.data.map(libro => {
+                    const personaLibro = listadoPersonas.find(persona => persona.id == libro.persona_id);
+                    const listado = JSON.parse(JSON.stringify(libro));
+                    listado.persona = personaLibro
+                        ? personaLibro.alias
+                        : '';
+                    return listado
+                });
+
+                setList(listadoCompleto);
                 setError('');
             }
         } catch (e) {
@@ -55,14 +68,16 @@ export default function ListadoLibros() {
     }
 
     const booksList = list.map((books) => 
-              
+        
         <Card bg="bg-light" className="mb-3 animate__animated animate__fadeIn" style={ { maxWidth: 400 } }>
             <Card.Header><h5>{ books.nombre }</h5></Card.Header>
             <Card.Body>
                 <Card.Text>{ books.descripcion }</Card.Text>
                 { books.persona_id === null 
                         ? <p><Badge pill variant="success">Estado: Disponible</Badge></p>
-                        : <p><Badge pill variant="danger">Estado: Prestado</Badge></p>  
+                        : <p><Badge pill variant="danger">Estado: Prestado</Badge><br/>
+                          <small className="text-muted">Prestado a: { books.persona }</small>
+                          </p>
                 }                   
                 <div>                    
                     <Link to={ `/libros/editar/${ books.id }` }><Button variant="primary" size="sm">Editar</Button></Link>
