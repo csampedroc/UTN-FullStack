@@ -18,17 +18,18 @@ export default function ListadoLibros() {
             const responsePersonas = await axios.get('http://localhost:3333/persona/');
             const listadoPersonas = responsePersonas.data; 
             const response = await axios.get(endpoint);   
+            
             if (response.status === 200) {
 
                 const listadoCompleto = response.data.map(libro => {
                     const personaLibro = listadoPersonas.find(persona => persona.id === libro.persona_id);
                     const listado = JSON.parse(JSON.stringify(libro));
+                    console.log(listado);
                     listado.persona = personaLibro
                         ? personaLibro.alias
                         : '';
                     return listado
                 });
-
                 setList(listadoCompleto);
                 setError('');
             }
@@ -51,7 +52,9 @@ export default function ListadoLibros() {
             setMensaje('Libro eliminado correctamente');
             fetchBooks();
         } catch (e) {
-            console.log('error ', e.message)
+            setError('Error eliminando Libro ' + e.message );
+            setMensaje('')
+            setShow(true);
         }
     }
 
@@ -62,7 +65,9 @@ export default function ListadoLibros() {
             setMensaje('Libro devuelto correctamente');            
             fetchBooks();
         } catch (e) {
-            console.log('error ', e.message);
+            setError('Error devolviendo Libro ' + e.message );
+            setMensaje('')
+            setShow(true);
         }
     }
 

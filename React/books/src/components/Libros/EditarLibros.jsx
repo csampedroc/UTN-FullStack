@@ -1,23 +1,24 @@
 import axios from 'axios';
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 export default function EditarLibros(props) {
 
     const params = useParams();
     const [form, setForm] = React.useState({
-        id: '',
-        nombre: '',
+        id: params.id,
+        nombre: params.nombre,
         descripcion: '',
-        categoria_id:'',
-        persona_id: ''
+        categoria_id: params.categoria_id,
+        persona_id: params.persona_id
     })    
   
     const buscarLibroPorId = async(idLibro) => {
         try {
             const respuesta = await axios.get('http://localhost:3333/libro/'+idLibro)
             setForm(respuesta.data)
+            console.log(respuesta.data);
         } catch(e) {
             console.log(e.message);
         }
@@ -35,11 +36,9 @@ export default function EditarLibros(props) {
     }
 
     const handleSubmit = async(e) => {
-        // form 
+
         e.preventDefault();
-        console.log(form);
         try {
-            
             await axios.put('http://localhost:3333/libro/'+params.id, form);
         }catch(e){
             console.log(e.message,'http://localhost:3333/libro/'+params.id);
@@ -51,16 +50,23 @@ export default function EditarLibros(props) {
     return (
         <div>           
             <h1>Editar</h1>
-            <Form inline onSubmit={handleSubmit}>
-                <Form.Label className="my-1 mr-2">
-                    Descripcion
-                </Form.Label>
-                <Form.Control className="mb-2 mr-sm-2" type="text" name="descripcion" custom value={form.descripcion} onChange={handleChangeDescripcion} />
+            <Form onSubmit={handleSubmit}>
+                <Form.Group as={Row}>
+                    <Form.Label column sm={2}>Nombre:</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control type="text" placeholder="Nombre" value={params.id} readOnly/>
+                    </Col>
+                </Form.Group>                
+                <Form.Group as={Row}>
+                    <Form.Label column sm={2}>Descripcion:</Form.Label>
+                    <Col sm={10}>
+                    <Form.Control type="text" placeholder="Descripcion" value={form.descripcion} onChange={handleChangeDescripcion} />
+                    </Col>
+                </Form.Group>
                 <Button type="submit" className="mb-2">
                     Grabar
                 </Button>
             </Form>
-            {/* <input type="text" name="descripcion" placeholder="descripcion" value={form.descripcion||''} onChange={handleChangeDescripcion}/><br/>             */}
         </div>
     )
 }

@@ -9,6 +9,8 @@ import AltaLibros from './components/Libros/AltaLibros';
 import EditarLibros from './components/Libros/EditarLibros';
 import ListadoLibros from './components/Libros/ListadoLibros';
 import PrestarLibros from './components/Libros/PrestarLibros';
+import AltaPersonas from './components/Personas/AltaPersonas';
+import EditarPersonas from './components/Personas/EditarPersonas';
 import ListadoPersonas from './components/Personas/ListadoPersonas';
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
         <Route exact path="/libros/editar/:id" component={EditarLibros} />
         <Route exact path="/libros/prestar/:id" component={PrestarLibros} />
         <Route exact path="/personas" component={ListadoPersonas} />
+        <Route exact path="/personas/agregar" component={AltaPersonas} />
+        <Route exact path="/personas/editar/:id" component={EditarPersonas} />
         <Route exact path="/generos" component={ListadoGeneros} />
         <Route exact path="/generos/agregar" component={AltaGeneros} />
         <Route exact path="/generos/editar/:id" component={EditarGeneros} />

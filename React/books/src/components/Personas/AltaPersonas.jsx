@@ -2,27 +2,15 @@ import axios from 'axios';
 import React from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
-export default function AltaLibros(props) {
+export default function AltaPersonas(props) {
 
-    const [generos, setGeneros] = React.useState([]);
     const [form, setForm] = React.useState({
         id: '',
         nombre: '',
-        descripcion: '',
-        categoria_id: '',
-        persona_id: null
+        apellido: '',
+        alias: '',
+        email: ''
     });   
-
-    const obtenerGeneros = async () => {
-        try {
-            const respuesta = await axios.get('http://localhost:3333/categoria/');
-            setGeneros(respuesta.data);
-        } catch (e) {}
-    };
-
-    React.useEffect(() => {
-        obtenerGeneros();
-    }, []);
 
     const handleChangeNombre = (e) => {
         const nuevoState = JSON.parse(JSON.stringify(form));
@@ -31,17 +19,24 @@ export default function AltaLibros(props) {
     }
 
 
-    const handleChangeDescripcion = (e) => {
+    const handleChangeApellido = (e) => {
         const nuevoState = JSON.parse(JSON.stringify(form));
-        nuevoState.descripcion = e.target.value;
+        nuevoState.apellido = e.target.value;
         setForm(nuevoState);
     }
 
 
-    const handleChangeCategoria = (e) => {
-        // e.target.value
+    const handleChangeAlias = (e) => {
+
         const nuevoState = JSON.parse(JSON.stringify(form));
-        nuevoState.categoria_id = e.target.value;
+        nuevoState.alias = e.target.value;
+        setForm(nuevoState);
+    }    
+
+    const handleChangeEmail = (e) => {
+
+        const nuevoState = JSON.parse(JSON.stringify(form));
+        nuevoState.email = e.target.value;
         setForm(nuevoState);
     }    
 
@@ -49,12 +44,13 @@ export default function AltaLibros(props) {
     const handleSubmit = async (e) => {
 
         try {
-            await axios.post('http://localhost:3333/libro', form);
+            e.preventDefault();
+            await axios.post('http://localhost:3333/persona', form);
         } catch (error) {
             console.log(error.message);            
         }
 
-        props.history.push('/libros');        
+        props.history.push('/personas');        
     }
 
     return (
@@ -70,23 +66,23 @@ export default function AltaLibros(props) {
             </Form.Group>
 
             <Form.Group as={Row}>
-                <Form.Label column sm={2}>Descripcion:</Form.Label>
+                <Form.Label column sm={2}>Apellido:</Form.Label>
                 <Col sm={10}>
-                <Form.Control type="text" placeholder="Descripcion" value={form.descripcion} onChange={handleChangeDescripcion}/>
+                <Form.Control type="text" placeholder="Descripcion" value={form.apellido} onChange={handleChangeApellido}/>
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} name="categoria_id" onChange={handleChangeCategoria}>
-                <Form.Label column sm={2}>Genero:</Form.Label>
+            <Form.Group as={Row}>
+                <Form.Label column sm={2}>Alias:</Form.Label>
                 <Col sm={10}>
-                <Form.Control as="select">
-                <option value="0">Seleccionar genero...</option>
-                    {generos.map(unGenero => (
-                        <option value={unGenero.id}>
-                            {unGenero.nombre}
-                        </option>
-                    ))}
-                </Form.Control>
+                <Form.Control type="text" placeholder="Alias" value={form.alias} onChange={handleChangeAlias}/>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row}>
+                <Form.Label column sm={2}>Email:</Form.Label>
+                <Col sm={10}>
+                <Form.Control type="email" placeholder="Email" value={form.email} onChange={handleChangeEmail}/>
                 </Col>
             </Form.Group>
 

@@ -39,7 +39,9 @@ export default function ListadoGeneros() {
             setMensaje('Genero eliminado correctamente');
             fetchGeneros();
         } catch (e) {
-            console.log('error ', e.message)
+            setError('Error eliminando Genero ' + e.message );
+            setMensaje('')
+            setShow(true);
         }
     }
 
