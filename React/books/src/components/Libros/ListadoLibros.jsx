@@ -57,7 +57,7 @@ export default function ListadoLibros() {
 
     const devolverLibro = async(idLibro) => {
         try {
-            await axios.put('http://localhost:3333/libro/devolver/'+ idLibro,null)
+            await axios.put('http://localhost:3333/libro/devolver/'+ idLibro, null)
             setShow(true);
             setMensaje('Libro devuelto correctamente');            
             fetchBooks();
@@ -82,7 +82,7 @@ export default function ListadoLibros() {
                     <Link to={ `/libros/editar/${ books.id }` }><Button variant="primary" size="sm">Editar</Button></Link>
                     <Link onClick={() => eliminarLibro(books.id) }><Button variant="danger" size="sm">Eliminar</Button></Link>
                     { books.persona_id === null 
-                        ? <Link to={{ pathname: `/libros/prestar/${ books.id }`, data: books.id  }}><Button variant="info" size="sm">Prestar</Button></Link>
+                        ? <Link to={`/libros/prestar/${ books.id }`}><Button variant="info" size="sm">Prestar</Button></Link>
                         : <Link onClick={() => devolverLibro(books.id) }><Button variant="success" size="sm">Devolver</Button></Link>
                     }   
                 </div>              
@@ -110,6 +110,9 @@ export default function ListadoLibros() {
                { booksList }
            </CardColumns>
 
+            <>
+                <Link to={ "/libros/agregar" }><Button variant="success" size="lg" block>Agregar</Button></Link>            
+            </>
 
         </>    
 
