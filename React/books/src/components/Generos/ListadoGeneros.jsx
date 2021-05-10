@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Table } from 'react-bootstrap';
+import { Accordion, Alert, Button, Card, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default function ListadoGeneros() {
@@ -15,9 +15,22 @@ export default function ListadoGeneros() {
     const fetchGeneros = async () => {
 
         try {                
+
+            const responseLibros = await axios.get('http://localhost:3333/libro/');
+            const listadoLibros = responseLibros.data; 
+
             const response = await axios.get(endpoint);   
+
             if (response.status === 200) {
-                setList(response.data);
+
+                const listadoCompleto = response.data.map(categoria => {
+                    const librosGenero = listadoLibros.filter(libro => libro.categoria_id === categoria.id);
+                    const listado = JSON.parse(JSON.stringify(categoria));
+                    listado.libro = librosGenero
+                    return listado
+                });    
+
+                setList(listadoCompleto);
                 setError('');
             }
         } catch (e) {
@@ -45,11 +58,34 @@ export default function ListadoGeneros() {
         }
     }
 
+    const renderizadoLibros = (librosAsociados) => {        
+        return (
+            <div>
+                {librosAsociados.map(libro => {return(<Card.Text>{libro.nombre}</Card.Text>)})}
+            </div>
+        )
+    }   
+
 
     const generosList = list.map((generos) =>
 
         <tr>
-            <td>{ generos.nombre }</td>
+            <td>
+                <Accordion defaultActiveKey="1">
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            { generos.nombre } ({ generos.libro.length  })
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                            { renderizadoLibros(generos.libro) } 
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                </Accordion>                
+            </td>
             <td><Link to={ `/generos/editar/${ generos.id }` }><Button variant="primary" size="sm">Editar</Button></Link></td>
             <td><Link onClick={() => eliminarGenero(generos.id) }><Button variant="danger" size="sm">Eliminar</Button></Link></td>    
         </tr>

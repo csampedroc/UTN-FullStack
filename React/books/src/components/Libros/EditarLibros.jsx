@@ -54,7 +54,7 @@ export default function EditarLibros(props) {
                 <Form.Group as={Row}>
                     <Form.Label column sm={2}>Nombre:</Form.Label>
                     <Col sm={10}>
-                    <Form.Control type="text" placeholder="Nombre" value={params.id} readOnly/>
+                    <Form.Control type="text" placeholder="Nombre" value={form.nombre} readOnly/>
                     </Col>
                 </Form.Group>                
                 <Form.Group as={Row}>

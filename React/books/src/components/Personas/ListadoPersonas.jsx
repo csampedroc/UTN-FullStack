@@ -79,7 +79,7 @@ export default function ListadoPersonas() {
                 <Card>
                     <Card.Header>
                     <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                        Libros Prestados
+                        Libros Prestados ({ personas.libro.length  })
                     </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
